@@ -11,12 +11,15 @@
     "lint": "turbo lint",
     "type-check": "turbo type-check",
     "format": "prettier --write .",
+    "tunnel": "ssh -N -L 5432:localhost:5432 -L 6379:localhost:6379 -L 9100:localhost:9100 root@207.244.236.154",
+    "dev:remote": "concurrently -n \"tunnel,server,client\" -c \"blue,green,cyan\" \"pnpm tunnel\" \"pnpm dev:server\" \"pnpm dev:client\"",
     "deploy": "ssh root@207.244.236.154 \"cd /var/www/FamaServer && docker compose pull && docker compose up -d\"",
     "deploy:status": "ssh root@207.244.236.154 \"cd /var/www/FamaServer && docker compose ps\"",
     "deploy:logs": "ssh root@207.244.236.154 \"cd /var/www/FamaServer && docker compose logs --tail=50\""
   },
   "devDependencies": {
     "turbo": "^2.8.14",
-    "prettier": "^3.3.0"
+    "prettier": "^3.3.0",
+    "concurrently": "^9.0.0"
   }
 }
