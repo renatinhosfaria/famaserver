@@ -339,11 +339,16 @@ export class FilesService {
       const output = execSync('df -B1 / | tail -1').toString();
       const parts = output.trim().split(/\s+/);
 
-      // Format: Filesystem 1B-blocks Used Available Use% Mounted
-      const totalBytes = parseInt(parts[1], 10);
-      const usedBytes = parseInt(parts[2], 10);
-      const availableBytes = parseInt(parts[3], 10);
-      const usePercent = parseInt(parts[4].replace('%', ''), 10);
+      // Find the Use% column by searching for the entry containing '%'.
+      // This handles filesystem names with spaces (e.g. Git Bash on Windows)
+      // as well as long names that wrap to the next line in df output.
+      const percentIdx = parts.findIndex((p) => p.includes('%'));
+      if (percentIdx < 3) throw new Error('Unexpected df output format');
+
+      const usePercent = parseInt(parts[percentIdx].replace('%', ''), 10);
+      const availableBytes = parseInt(parts[percentIdx - 1], 10);
+      const usedBytes = parseInt(parts[percentIdx - 2], 10);
+      const totalBytes = parseInt(parts[percentIdx - 3], 10);
 
       return {
         totalBytes,

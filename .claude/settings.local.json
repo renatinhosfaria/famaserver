@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell.exe -Command \"Test-Path ''$HOME\\\\Downloads\\\\FAMASERVER-IMPLEMENTATION-PLAN.md''\")",
+      "Bash(powershell.exe -Command \"Get-ChildItem -Path ''C:\\\\Users\\\\Windows 11\\\\Downloads\\\\*FAMA*'' -Name\")",
+      "Bash(powershell.exe -Command \"[Environment]::GetFolderPath\\(''UserProfile''\\)\")",
+      "Bash(powershell.exe -Command \"Get-ChildItem -Path \\([Environment]::GetFolderPath\\(''UserProfile''\\) + ''\\\\Downloads''\\) -Filter ''*FAMA*'' -Name\")",
+      "Bash(powershell.exe -Command \"\\(New-Object -ComObject Shell.Application\\).NameSpace\\(''shell:Downloads''\\).Self.Path\")",
+      "Bash(powershell.exe -Command \"Move-Item -Path ''D:\\\\Usuários\\\\Windows 11\\\\Downloads\\\\FAMASERVER-IMPLEMENTATION-PLAN.md'' -Destination ''D:\\\\Usuários\\\\Windows 11\\\\Área de Trabalho\\\\VSCODE\\\\famaserver\\\\''\")",
+      "Bash(git commit:*)",
+      "Bash(git config user.email \"renatinhosfaria@gmail.com\")",
+      "Bash(git config user.name \"Renato Faria\")",
+      "Bash(python3 -c \":*)",
+      "Bash(node -e \":*)",
+      "Bash(pnpm install)",
+      "Bash(pnpm build)",
+      "Bash(git add apps/server/package.json apps/client/package.json apps/server/tsconfig.json apps/client/tsconfig.json package.json packages/tsconfig/ pnpm-lock.yaml)",
+      "Bash(git add apps/server/Dockerfile apps/client/Dockerfile .dockerignore)",
+      "Bash(git add .github/workflows/build.yml)",
+      "Bash(git add docker-compose.yml .env.example .prettierrc .gitignore)",
+      "Bash(\"D:/Usuários/Windows 11/Área:*)",
+      "Bash(pnpm dev:remote)",
+      "Bash(powershell.exe -Command \":*)",
+      "Bash(sed -i 's/\"\"dev\"\": \"\"next dev\"\",/\"\"dev\"\": \"\"next dev --no-turbopack\"\",/' apps/client/package.json)",
+      "Bash(grep '\"\"dev\"\"' apps/client/package.json)",
+      "Bash(powershell -Command \":*)",
+      "Bash(node_modules/.bin/next dev --help)",
+      "Bash(powershell -Command \"Get-NetTCPConnection -LocalPort 3001 -ErrorAction SilentlyContinue | Select-Object State, OwningProcess\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3001/files/storage -H \"Authorization: Bearer teste\")",
+      "Bash(curl -s http://localhost:3001/)",
+      "Bash(curl -s -w \"\\\\nHTTP: %{http_code}\" http://localhost:3000/api-proxy/files/storage -H \"Authorization: Bearer teste\")",
+      "Bash(pnpm deploy)",
+      "Bash(pnpm run deploy)",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d.get\\(''name''\\), d.get\\(''version''\\)\\)\")"
+    ]
+  }
+}
