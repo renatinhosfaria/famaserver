@@ -1,31 +1,27 @@
-FROM node:22-alpine AS base
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable && corepack prepare pnpm@10.27.0 --activate
-
-FROM base AS deps
+# Stage 1 — Install dependencies
+FROM node:22-alpine AS deps
 WORKDIR /app
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
-COPY apps/client/package.json apps/client/package.json
-COPY apps/server/package.json apps/server/package.json
-COPY packages/eslint-config/package.json packages/eslint-config/package.json
-COPY packages/tsconfig/package.json packages/tsconfig/package.json
-COPY packages/types/package.json packages/types/package.json
-COPY packages/utils/package.json packages/utils/package.json
-RUN pnpm install --frozen-lockfile
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY apps/server/package.json ./apps/server/
+COPY packages/types/package.json ./packages/types/
+COPY packages/utils/package.json ./packages/utils/
+COPY packages/tsconfig/package.json ./packages/tsconfig/
+RUN corepack enable pnpm && pnpm install --frozen-lockfile
 
+# Stage 2 — Build
 FROM deps AS builder
-WORKDIR /app
-COPY apps ./apps
-COPY packages ./packages
+COPY packages/tsconfig ./packages/tsconfig
+COPY packages/types ./packages/types
+COPY packages/utils ./packages/utils
+COPY apps/server ./apps/server
+RUN pnpm --filter @famaserver/types build
+RUN pnpm --filter @famaserver/utils build
 RUN pnpm --filter server build
 
+# Stage 3 — Production
 FROM node:22-alpine AS runner
 WORKDIR /app
-ENV NODE_ENV=production
+COPY --from=builder /app/apps/server/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/apps/server/package.json ./apps/server/package.json
-COPY --from=builder /app/apps/server/dist ./apps/server/dist
 EXPOSE 3001
-WORKDIR /app/apps/server
-CMD ["node", "dist/src/main.js"]
+CMD ["node", "dist/main.js"]

@@ -1,8 +1,7 @@
+node_modules
+.next
+dist
 .git
-node_modules/
-**/node_modules/
-.turbo/
-apps/*/.next/
-apps/*/dist/
-coverage/
-docs/
+*.log
+.env
+.env.*
