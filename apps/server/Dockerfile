@@ -18,7 +18,7 @@ COPY apps/server ./apps/server
 RUN pnpm --filter @famaserver/types build && \
     pnpm --filter @famaserver/utils build && \
     pnpm --filter server build && \
-    pnpm --filter server deploy --prod /deploy/server
+    pnpm --filter server deploy --legacy --prod /deploy/server
 
 # Stage 3 — Production
 FROM node:22-alpine AS runner
