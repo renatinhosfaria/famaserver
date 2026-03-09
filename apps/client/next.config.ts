@@ -1,13 +1,14 @@
 import type { NextConfig } from "next";
 
+const backendUrl = process.env.BACKEND_URL ?? "http://localhost:3001";
+
 const nextConfig: NextConfig = {
   output: "standalone",
-  /* config options here */
   async rewrites() {
     return [
       {
-        source: '/api-proxy/:path*',
-        destination: 'http://famaserver_backend:3001/:path*', // Docker Backend
+        source: "/api-proxy/:path*",
+        destination: `${backendUrl}/:path*`,
       },
     ];
   },

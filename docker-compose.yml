@@ -9,6 +9,8 @@ services:
   client:
     image: ghcr.io/renatinhosfaria/famaserver/client:latest
     restart: unless-stopped
+    environment:
+      - BACKEND_URL=http://server:3001
     env_file: .env
     networks: [app-network]
 
