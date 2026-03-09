@@ -1,22 +1,22 @@
 {
   "name": "famaserver",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "packageManager": "pnpm@10.27.0",
   "scripts": {
     "dev": "turbo dev",
-    "dev:server": "pnpm --filter server dev",
-    "dev:client": "pnpm --filter client dev",
+    "dev:server": "turbo dev --filter=server",
+    "dev:client": "turbo dev --filter=client",
     "build": "turbo build",
     "lint": "turbo lint",
     "type-check": "turbo type-check",
-    "format": "pnpm -r format"
+    "format": "prettier --write .",
+    "deploy": "ssh root@207.244.236.154 \"cd /var/www/FamaServer && docker compose pull && docker compose up -d\"",
+    "deploy:status": "ssh root@207.244.236.154 \"cd /var/www/FamaServer && docker compose ps\"",
+    "deploy:logs": "ssh root@207.244.236.154 \"cd /var/www/FamaServer && docker compose logs --tail=50\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.27.0",
   "devDependencies": {
-    "turbo": "^2.8.14"
+    "turbo": "^2.8.14",
+    "prettier": "^3.3.0"
   }
 }
